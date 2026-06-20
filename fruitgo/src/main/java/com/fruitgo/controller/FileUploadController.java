@@ -12,40 +12,32 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/upload")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class FileUploadController {
 
-    private final String UPLOAD_DIR =
-            "uploads/";
+    @PostMapping
+    public String uploadFile(
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
 
-@PostMapping
-public String uploadFile(
-        @RequestParam("file") MultipartFile file
-) throws IOException {
+        String uploadDir =
+                System.getProperty("user.dir")
+                + File.separator
+                + "uploads";
 
-    String uploadDir =
-            System.getProperty("user.dir")
-            + File.separator
-            + "uploads";
+        File directory = new File(uploadDir);
 
-    File directory =
-            new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
 
-    if (!directory.exists()) {
-        directory.mkdirs();
+        String fileName = file.getOriginalFilename();
+
+        File destination =
+                new File(directory, fileName);
+
+        file.transferTo(destination);
+
+        return "https://fruitgo-backend-l1on.onrender.com/uploads/" + fileName;
     }
-
-    String fileName =
-            file.getOriginalFilename();
-
-    File destination =
-            new File(
-                    directory,
-                    fileName
-            );
-
-    file.transferTo(destination);
-
-   return "https://fruitgo-backend-l1on.onrender.com/uploads/" + fileName;
-}
 }
