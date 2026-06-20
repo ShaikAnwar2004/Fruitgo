@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import { Navigate } from "react-router-dom";
-
-const role = localStorage.getItem("role");
-
-if (role !== "ADMIN") {
-    return <Navigate to="/" />;
-}
 
 function AdminOrders() {
 
-    const [orders, setOrders] =
-        useState([]);
+    const role = localStorage.getItem("role");
+
+    if (role !== "ADMIN") {
+        return <Navigate to="/" />;
+    }
+
+    const [orders, setOrders] = useState([]);
 
     const loadOrders = () => {
 
@@ -20,20 +18,15 @@ function AdminOrders() {
             "https://fruitgo-backend.onrender.com/api/orders"
         )
         .then((response) => {
-
             setOrders(response.data);
-
         });
     };
 
     useEffect(() => {
-
         loadOrders();
-
     }, []);
 
-    const updateStatus =
-        async (id, status) => {
+    const updateStatus = async (id, status) => {
 
         await axios.put(
             `https://fruitgo-backend.onrender.com/api/orders/${id}/${status}`
@@ -46,87 +39,68 @@ function AdminOrders() {
 
         <div className="container mt-4">
 
-            <h2>
-                📦 Admin Orders
-            </h2>
+            <h2>📦 Admin Orders</h2>
 
             <table className="table">
 
                 <thead>
-
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
 
                 <tbody>
 
-                {orders.map(order => (
+                    {orders.map(order => (
 
-                    <tr key={order.id}>
+                        <tr key={order.id}>
 
-                        <td>{order.id}</td>
+                            <td>{order.id}</td>
 
-                        <td>
-                            {order.customerEmail}
-                        </td>
+                            <td>{order.customerEmail}</td>
 
-                        <td>
-                            ₹{order.totalAmount}
-                        </td>
+                            <td>₹{order.totalAmount}</td>
 
-                        <td>
-                            {order.status}
-                        </td>
+                            <td>{order.status}</td>
 
-                        <td>
+                            <td>
 
-                            <button
-                                className="btn btn-info me-2"
-                                onClick={() =>
-                                    updateStatus(
-                                        order.id,
-                                        "PACKED"
-                                    )
-                                }
-                            >
-                                PACKED
-                            </button>
+                                <button
+                                    className="btn btn-info me-2"
+                                    onClick={() =>
+                                        updateStatus(order.id, "PACKED")
+                                    }
+                                >
+                                    PACKED
+                                </button>
 
-                            <button
-                                className="btn btn-primary me-2"
-                                onClick={() =>
-                                    updateStatus(
-                                        order.id,
-                                        "SHIPPED"
-                                    )
-                                }
-                            >
-                                SHIPPED
-                            </button>
+                                <button
+                                    className="btn btn-primary me-2"
+                                    onClick={() =>
+                                        updateStatus(order.id, "SHIPPED")
+                                    }
+                                >
+                                    SHIPPED
+                                </button>
 
-                            <button
-                                className="btn btn-success"
-                                onClick={() =>
-                                    updateStatus(
-                                        order.id,
-                                        "DELIVERED"
-                                    )
-                                }
-                            >
-                                DELIVERED
-                            </button>
+                                <button
+                                    className="btn btn-success"
+                                    onClick={() =>
+                                        updateStatus(order.id, "DELIVERED")
+                                    }
+                                >
+                                    DELIVERED
+                                </button>
 
-                        </td>
+                            </td>
 
-                    </tr>
+                        </tr>
 
-                ))}
+                    ))}
 
                 </tbody>
 

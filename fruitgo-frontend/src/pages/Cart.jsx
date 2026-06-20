@@ -62,9 +62,10 @@ function Cart({ cartItems, setCartItems }) {
         );
 
         const order = {
-            customerEmail: "john@gmail.com",
-            totalAmount: total
-        };
+    customerEmail:
+        localStorage.getItem("email"),
+    totalAmount: total
+};
 
         await placeOrder(order);
 

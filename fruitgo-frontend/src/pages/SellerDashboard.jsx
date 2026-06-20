@@ -1,87 +1,54 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import { Navigate } from "react-router-dom";
-
-const role = localStorage.getItem("role");
-
-if (role !== "SELLER" && role !== "ADMIN") {
-    return <Navigate to="/" />;
-}
 
 function SellerDashboard() {
 
+    const role = localStorage.getItem("role");
 
-const role =
-    localStorage.getItem("role");
+    if (role !== "SELLER" && role !== "ADMIN") {
+        return <Navigate to="/" />;
+    }
 
-console.log("ROLE =", role);
+    const [fruits, setFruits] = useState([]);
 
-if (role !== "ADMIN") {
-
-    return (
-
-        <div className="container mt-5">
-
-            <h2>
-                Access Denied 🚫
-            </h2>
-
-            <p>
-                Only Admin can access
-                Seller Dashboard
-            </p>
-
-        </div>
-
-    );
-}
-
-const [fruits, setFruits] = useState([]);
-
-const [fruit, setFruit] = useState({
-    name: "",
-    description: "",
-    price: "",
-    quantity: "",
-    category: "",
-    imageUrl: ""
-});
-
-const [editingId, setEditingId] =
-    useState(null);
-
-const editFruit = (fruit) => {
-
-    setFruit({
-        name: fruit.name,
-        description: fruit.description,
-        price: fruit.price,
-        quantity: fruit.quantity,
-        category: fruit.category || "",
-        imageUrl: fruit.imageUrl || ""
+    const [fruit, setFruit] = useState({
+        name: "",
+        description: "",
+        price: "",
+        quantity: "",
+        category: "",
+        imageUrl: ""
     });
 
-    setEditingId(fruit.id);
-};
+    const [editingId, setEditingId] = useState(null);
 
-const loadFruits = () => {
+    const editFruit = (fruit) => {
+        setFruit({
+            name: fruit.name,
+            description: fruit.description,
+            price: fruit.price,
+            quantity: fruit.quantity,
+            category: fruit.category || "",
+            imageUrl: fruit.imageUrl || ""
+        });
 
-    axios.get(
-        "https://fruitgo-backend.onrender.com/api/fruits"
-    )
-    .then((response) => {
+        setEditingId(fruit.id);
+    };
 
-        setFruits(response.data);
+    const loadFruits = () => {
+        axios
+            .get("https://fruitgo-backend.onrender.com/api/fruits")
+            .then((response) => {
+                setFruits(response.data);
+            });
+    };
 
-    });
-};
+    useEffect(() => {
+        loadFruits();
+    }, []);
 
-useEffect(() => {
-
-    loadFruits();
-
-}, []);
+    // KEEP ALL YOUR REMAINING CODE EXACTLY AS IT IS
 
 const handleChange = (e) => {
 
