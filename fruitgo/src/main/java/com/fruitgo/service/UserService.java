@@ -27,7 +27,9 @@ public User register(User user) {
             )
     );
 
-    user.setRole("USER");
+    if (user.getRole() == null || user.getRole().isEmpty()) {
+        user.setRole("USER");
+    }
 
     return userRepository.save(user);
 }
