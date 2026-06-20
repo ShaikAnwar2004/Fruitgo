@@ -60,7 +60,7 @@ const editFruit = (fruit) => {
 const loadFruits = () => {
 
     axios.get(
-        "http://localhost:8080/api/fruits"
+        "https://fruitgo-backend-l1on.onrender.com/api/fruits"
     )
     .then((response) => {
 
@@ -93,7 +93,7 @@ const addFruit = async (e) => {
         if (editingId) {
 
             await axios.put(
-                `http://localhost:8080/api/fruits/${editingId}`,
+                `https://fruitgo-backend-l1on.onrender.com/api/fruits/${editingId}`,
                 fruit
             );
 
@@ -106,7 +106,7 @@ const addFruit = async (e) => {
         } else {
 
             await axios.post(
-                "http://localhost:8080/api/fruits",
+              "https://fruitgo-backend-l1on.onrender.com/api/fruits",
                 fruit
             );
 
@@ -139,7 +139,7 @@ const addFruit = async (e) => {
 const deleteFruit = async (id) => {
 
     await axios.delete(
-        `http://localhost:8080/api/fruits/${id}`
+       `https://fruitgo-backend-l1on.onrender.com/api/fruits/${id}`
     );
 
     loadFruits();
@@ -160,7 +160,7 @@ const handleFileUpload =
 
         const response =
             await axios.post(
-                "http://localhost:8080/api/upload",
+                "https://fruitgo-backend-l1on.onrender.com/api/upload",
                 formData,
                 {
                     headers: {

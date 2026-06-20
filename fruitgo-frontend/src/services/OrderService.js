@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/orders";
+const API_URL =
+"https://fruitgo-backend-l1on.onrender.com/api/orders";
 
 export const placeOrder = (order) => {
     return axios.post(API_URL, order);

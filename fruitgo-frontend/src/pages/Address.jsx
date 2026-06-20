@@ -28,7 +28,7 @@ function Address() {
         try {
 
             await axios.post(
-                "http://localhost:8080/api/address",
+                "https://fruitgo-backend-l1on.onrender.com/api/address",
                 address
             );
 

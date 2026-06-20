@@ -46,7 +46,6 @@ public String uploadFile(
 
     file.transferTo(destination);
 
-    return "http://localhost:8080/uploads/"
-            + fileName;
+   return "https://fruitgo-backend-l1on.onrender.com/uploads/" + fileName;
 }
 }

@@ -10,7 +10,7 @@ const [orders, setOrders] = useState([]);
 useEffect(() => {
 
     axios.get(
-        "http://localhost:8080/api/dashboard"
+        "https://fruitgo-backend-l1on.onrender.com/api/dashboard"
     )
     .then((response) => {
 
@@ -19,7 +19,7 @@ useEffect(() => {
     });
 
     axios.get(
-        "http://localhost:8080/api/orders"
+        "https://fruitgo-backend-l1on.onrender.com/api/orders"
     )
     .then((response) => {
 
