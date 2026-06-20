@@ -1,0 +1,37 @@
+.card {
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 15px;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.btn-success {
+  font-weight: 600;
+}
+
+.hero-banner {
+  background: linear-gradient(to right, #28a745, #20c997);
+  color: white;
+  padding: 40px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.category-btn {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.search-box {
+  border-radius: 10px;
+  padding: 12px;
+}
