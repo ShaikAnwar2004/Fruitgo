@@ -22,7 +22,7 @@ const checkoutItems =
 useEffect(() => {
 
     axios.get(
-       "https://fruitgo-backend-l1on.onrender.com/api/address"
+       "https://fruitgo-backend.onrender.com/api/address"
     )
     .then((response) => {
 
@@ -42,7 +42,7 @@ const placeOrder = async () => {
     try {
 
         await axios.post(
-           "https://fruitgo-backend-l1on.onrender.com/api/orders",
+           "https://fruitgo-backend.onrender.com/api/orders",
             {
                 customerEmail:
                     localStorage.getItem("email"),
@@ -102,7 +102,7 @@ const handlePayment = () => {
 
     await axios.put(
 
-        `https://fruitgo-backend-l1on.onrender.com/api/fruits/stock/${item.id}/${item.quantity}`
+        `https://fruitgo-backend.onrender.com/api/fruits/stock/${item.id}/${item.quantity}`
 
     );
 }

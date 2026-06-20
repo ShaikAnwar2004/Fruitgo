@@ -23,7 +23,7 @@ function Register() {
         try {
 
             await axios.post(
-                "https://fruitgo-backend-l1on.onrender.com/api/users/register",
+                "https://fruitgo-backend.onrender.com/api/users/register",
                 user
             );
 

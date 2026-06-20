@@ -17,7 +17,7 @@ function AdminOrders() {
     const loadOrders = () => {
 
         axios.get(
-            "https://fruitgo-backend-l1on.onrender.com/api/orders"
+            "https://fruitgo-backend.onrender.com/api/orders"
         )
         .then((response) => {
 
@@ -36,7 +36,7 @@ function AdminOrders() {
         async (id, status) => {
 
         await axios.put(
-            `https://fruitgo-backend-l1on.onrender.com/api/orders/${id}/${status}`
+            `https://fruitgo-backend.onrender.com/api/orders/${id}/${status}`
         );
 
         loadOrders();

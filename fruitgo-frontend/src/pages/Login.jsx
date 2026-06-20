@@ -26,7 +26,7 @@ function Login() {
         try {
 
             const response = await axios.post(
-                "https://fruitgo-backend-l1on.onrender.com/api/users/login",
+                "https://fruitgo-backend.onrender.com/api/users/login",
                 loginData
             );
             console.log(response.data);

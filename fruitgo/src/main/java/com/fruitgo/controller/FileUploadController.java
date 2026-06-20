@@ -38,6 +38,6 @@ public class FileUploadController {
 
         file.transferTo(destination);
 
-        return "https://fruitgo-backend-l1on.onrender.com/uploads/" + fileName;
+        return "https://fruitgo-backend.onrender.com/uploads/" + fileName;
     }
 }
