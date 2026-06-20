@@ -27,7 +27,11 @@ public User register(User user) {
             )
     );
 
-    user.setRole("ADMIN");
+    if(user.getEmail().equals("admin@gmail.com")) {
+        user.setRole("ADMIN");
+    } else {
+        user.setRole("USER");
+    }
 
     return userRepository.save(user);
 }
