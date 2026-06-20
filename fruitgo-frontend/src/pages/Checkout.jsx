@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 
 function Checkout({
@@ -7,35 +7,40 @@ function Checkout({
     setCartItems
 }) {
 
+    const token = localStorage.getItem("token");
 
-const [addresses, setAddresses] = useState([]);
+    if (!token) {
+        return <Navigate to="/login" />;
+    }
 
-const location = useLocation();
-const navigate = useNavigate();
+    const [addresses, setAddresses] = useState([]);
 
-const totalAmount =
-    location.state?.totalAmount || 0;
+    const location = useLocation();
+    const navigate = useNavigate();
 
-const checkoutItems =
-    location.state?.cartItems || [];
+    const totalAmount =
+        location.state?.totalAmount || 0;
 
-useEffect(() => {
+    const checkoutItems =
+        location.state?.cartItems || [];
 
-    axios.get(
-       "https://fruitgo-backend.onrender.com/api/address"
-    )
-    .then((response) => {
+    useEffect(() => {
 
-        setAddresses(response.data);
+        axios.get(
+            "https://fruitgo-backend.onrender.com/api/address"
+        )
+        .then((response) => {
 
-    })
-    .catch((error) => {
+            setAddresses(response.data);
 
-        console.log(error);
+        })
+        .catch((error) => {
 
-    });
+            console.log(error);
 
-}, []);
+        });
+
+    }, []);
 
 const placeOrder = async () => {
 

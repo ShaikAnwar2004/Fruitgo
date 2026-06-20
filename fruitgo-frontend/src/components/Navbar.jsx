@@ -2,197 +2,197 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Navbar({ cartCount }) {
 
+    const navigate = useNavigate();
 
-const navigate = useNavigate();
+    const logout = () => {
 
-const logout = () => {
+        localStorage.clear();
 
-    localStorage.clear();
+        alert(
+            "Logged Out Successfully"
+        );
 
-    alert(
-        "Logged Out Successfully"
-    );
+        navigate("/login");
+    };
 
-    navigate("/login");
-};
+    const token =
+        localStorage.getItem("token");
 
-const token =
-    localStorage.getItem("token");
+    const role =
+        localStorage.getItem("role");
 
-const role =
-    localStorage.getItem("role");
+    return (
 
-return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-success">
 
-    <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-
-        <div className="container">
-
-            <Link
-                className="navbar-brand fw-bold"
-                to="/"
-            >
-                🍎 FruitGo
-            </Link>
-
-            <div className="ms-auto d-flex align-items-center">
-
-                {token && (
-
-                    <span className="text-white fw-bold me-3">
-
-                        {role}
-
-                    </span>
-
-                )}
+            <div className="container">
 
                 <Link
-                    to="/cart"
-                    className="btn btn-warning me-2"
+                    className="navbar-brand fw-bold"
+                    to="/"
                 >
-                    Cart ({cartCount})
+                    🍎 FruitGo
                 </Link>
 
+                <div className="ms-auto d-flex align-items-center">
 
-                {token ? (
+                    {token && (
 
-                    <div className="dropdown">
+                        <span className="text-white fw-bold me-3">
 
-                        <button
-                            className="btn btn-primary dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                        >
-                            Profile
-                        </button>
+                            {role}
 
-                        <ul className="dropdown-menu dropdown-menu-end">
+                        </span>
 
-                            <li>
+                    )}
 
-                                <Link
-                                    className="dropdown-item"
-                                    to="/profile"
-                                >
-                                    My Profile
-                                </Link>
+                    <Link
+                        to="/cart"
+                        className="btn btn-warning me-2"
+                    >
+                        Cart ({cartCount})
+                    </Link>
 
-                            </li>
+                    {token ? (
 
-                            <li>
+                        <div className="dropdown">
 
-                                <Link
-                                    className="dropdown-item"
-                                    to="/address"
-                                >
-                                    Address
-                                </Link>
+                            <button
+                                className="btn btn-primary dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                            >
+                                Profile
+                            </button>
 
-                            </li>
+                            <ul className="dropdown-menu dropdown-menu-end">
 
-                            {role === "ADMIN" && (
+                                <li>
 
-                                <>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/profile"
+                                    >
+                                        👤 My Profile
+                                    </Link>
 
-                                    <li>
+                                </li>
 
-                                        <Link
-                                            className="dropdown-item"
-                                            to="/seller"
-                                        >
-                                            Seller Dashboard
-                                        </Link>
+                                <li>
 
-                                    </li>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/address"
+                                    >
+                                        🏠 Address
+                                    </Link>
 
-                                    <li>
+                                </li>
 
-                                        <Link
-                                            className="dropdown-item"
-                                            to="/dashboard"
-                                        >
-                                            Revenue Dashboard
-                                        </Link>
+                                <li>
 
-                                    </li>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/orders"
+                                    >
+                                        📦 My Orders
+                                    </Link>
 
-                                    <li>
+                                </li>
 
-                                        <Link
-                                            className="dropdown-item"
-                                            to="/admin-orders"
-                                        >
-                                            Admin Orders
-                                        </Link>
+                                {role === "ADMIN" && (
 
-                                    </li>
+                                    <>
 
-                                    <li>
+                                        <li>
+                                            <hr className="dropdown-divider" />
+                                        </li>
 
-    <Link
-        className="dropdown-item"
-        to="/orders"
-    >
-        My Orders
-    </Link>
+                                        <li>
 
-</li>
+                                            <Link
+                                                className="dropdown-item"
+                                                to="/seller"
+                                            >
+                                                🏪 Seller Dashboard
+                                            </Link>
 
-                                </>
+                                        </li>
 
-                            )}
+                                        <li>
 
-                            <li>
-                                <hr className="dropdown-divider" />
-                            </li>
+                                            <Link
+                                                className="dropdown-item"
+                                                to="/dashboard"
+                                            >
+                                                📊 Revenue Dashboard
+                                            </Link>
 
-                            <li>
+                                        </li>
 
-                                <button
-                                    className="dropdown-item text-danger"
-                                    onClick={logout}
-                                >
-                                    Logout
-                                </button>
+                                        <li>
 
-                            </li>
+                                            <Link
+                                                className="dropdown-item"
+                                                to="/admin-orders"
+                                            >
+                                                📋 Admin Orders
+                                            </Link>
 
-                        </ul>
+                                        </li>
 
-                    </div>
+                                    </>
 
-                ) : (
+                                )}
 
-                    <>
+                                <li>
+                                    <hr className="dropdown-divider" />
+                                </li>
 
-                        <Link
-                            to="/login"
-                            className="btn btn-light me-2"
-                        >
-                            Login
-                        </Link>
+                                <li>
 
-                        <Link
-                            to="/register"
-                            className="btn btn-info"
-                        >
-                            Register
-                        </Link>
+                                    <button
+                                        className="dropdown-item text-danger"
+                                        onClick={logout}
+                                    >
+                                        🚪 Logout
+                                    </button>
 
-                    </>
+                                </li>
 
-                )}
+                            </ul>
+
+                        </div>
+
+                    ) : (
+
+                        <>
+
+                            <Link
+                                to="/login"
+                                className="btn btn-light me-2"
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                to="/register"
+                                className="btn btn-info"
+                            >
+                                Register
+                            </Link>
+
+                        </>
+
+                    )}
+
+                </div>
 
             </div>
 
-        </div>
+        </nav>
 
-    </nav>
-
-);
-
-
+    );
 }
 
 export default Navbar;

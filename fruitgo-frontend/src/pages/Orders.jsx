@@ -1,118 +1,134 @@
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { getOrders } from "../services/OrderService";
 
 function Orders() {
 
+    const token = localStorage.getItem("token");
 
-const [orders, setOrders] = useState([]);
+    if (!token) {
+        return <Navigate to="/login" />;
+    }
 
-useEffect(() => {
+    const [orders, setOrders] = useState([]);
 
-    getOrders()
-        .then((response) => {
+    useEffect(() => {
 
-            const email =
-                localStorage.getItem("email");
+        getOrders()
+            .then((response) => {
 
-            const userOrders =
-                response.data.filter(
-                    order =>
-                        order.customerEmail === email
-                );
+                const email =
+                    localStorage.getItem("email");
 
-            setOrders(userOrders);
+                const userOrders =
+                    response.data.filter(
+                        order =>
+                            order.customerEmail === email
+                    );
 
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+                setOrders(userOrders);
 
-}, []);
+            })
+            .catch((error) => {
 
-return (
+                console.log(error);
 
-    <div className="container mt-4">
+            });
 
-        <h2 className="mb-4">
-            📦 My Orders
-        </h2>
+    }, []);
 
-        <table className="table table-bordered table-hover">
+    return (
 
-            <thead className="table-dark">
+        <div className="container mt-4">
 
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
+            <h2 className="mb-4">
+                📦 My Orders
+            </h2>
 
-            </thead>
+            {orders.length === 0 ? (
 
-            <tbody>
+                <div className="alert alert-info">
+                    No Orders Found
+                </div>
 
-            {orders.map(order => (
+            ) : (
 
-                <tr key={order.id}>
+                <table className="table table-bordered table-hover">
 
-                    <td>{order.id}</td>
+                    <thead className="table-dark">
 
-                    <td>
-                        {order.customerEmail}
-                    </td>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
 
-                    <td>
-                        ₹{order.totalAmount}
-                    </td>
+                    </thead>
 
-                    <td>
-                        {new Date(
-                            order.orderDate
-                        ).toLocaleString()}
-                    </td>
+                    <tbody>
 
-                    <td>
+                        {orders.map(order => (
 
-                        {order.status === "PLACED" && (
-                            <span className="badge bg-warning text-dark">
-                                PLACED
-                            </span>
-                        )}
+                            <tr key={order.id}>
 
-                        {order.status === "PACKED" && (
-                            <span className="badge bg-info">
-                                PACKED
-                            </span>
-                        )}
+                                <td>{order.id}</td>
 
-                        {order.status === "SHIPPED" && (
-                            <span className="badge bg-primary">
-                                SHIPPED
-                            </span>
-                        )}
+                                <td>
+                                    {order.customerEmail}
+                                </td>
 
-                        {order.status === "DELIVERED" && (
-                            <span className="badge bg-success">
-                                DELIVERED
-                            </span>
-                        )}
+                                <td>
+                                    ₹{order.totalAmount}
+                                </td>
 
-                    </td>
+                                <td>
+                                    {new Date(
+                                        order.orderDate
+                                    ).toLocaleString()}
+                                </td>
 
-                </tr>
+                                <td>
 
-            ))}
+                                    {order.status === "PLACED" && (
+                                        <span className="badge bg-warning text-dark">
+                                            PLACED
+                                        </span>
+                                    )}
 
-            </tbody>
+                                    {order.status === "PACKED" && (
+                                        <span className="badge bg-info">
+                                            PACKED
+                                        </span>
+                                    )}
 
-        </table>
+                                    {order.status === "SHIPPED" && (
+                                        <span className="badge bg-primary">
+                                            SHIPPED
+                                        </span>
+                                    )}
 
-    </div>
-);
+                                    {order.status === "DELIVERED" && (
+                                        <span className="badge bg-success">
+                                            DELIVERED
+                                        </span>
+                                    )}
 
+                                </td>
 
+                            </tr>
+
+                        ))}
+
+                    </tbody>
+
+                </table>
+
+            )}
+
+        </div>
+    );
 }
 
 export default Orders;

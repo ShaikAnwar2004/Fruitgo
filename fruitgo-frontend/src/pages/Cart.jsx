@@ -1,9 +1,7 @@
-import { placeOrder } from "../services/OrderService";
-
 import { useNavigate } from "react-router-dom";
 
-
 function Cart({ cartItems, setCartItems }) {
+
     const navigate = useNavigate();
 
     const increaseQuantity = (id) => {
@@ -51,37 +49,29 @@ function Cart({ cartItems, setCartItems }) {
         0
     );
 
-    const handleCheckout = async () => {
+    const handleCheckout = () => {
 
-    try {
+        const token =
+            localStorage.getItem("token");
 
-        const total = cartItems.reduce(
-            (sum, item) =>
-                sum + item.price * item.quantity,
-            0
-        );
+        if (!token) {
 
-        const order = {
-    customerEmail:
-        localStorage.getItem("email"),
-    totalAmount: total
-};
+            alert(
+                "Please Login First To Place An Order"
+            );
 
-        await placeOrder(order);
+            navigate("/login");
 
-        alert("Order Placed Successfully!");
+            return;
+        }
 
-        setCartItems([]);
-
-        localStorage.removeItem("cart");
-
-    } catch (error) {
-
-        console.log(error);
-
-        alert("Order Failed");
-    }
-};
+        navigate("/checkout", {
+            state: {
+                totalAmount: total,
+                cartItems: cartItems
+            }
+        });
+    };
 
     return (
 
@@ -90,68 +80,71 @@ function Cart({ cartItems, setCartItems }) {
             <h2>🛒 My Cart</h2>
 
             {cartItems.length === 0 ? (
+
                 <h4>Cart is Empty</h4>
+
             ) : (
+
                 <>
                     <table className="table">
 
                         <thead>
-                        <tr>
-                            <th>Fruit</th>
-                            <th>Price</th>
-                            <th>Qty</th>
-                            <th>Actions</th>
-                        </tr>
+
+                            <tr>
+                                <th>Fruit</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Actions</th>
+                            </tr>
+
                         </thead>
 
                         <tbody>
 
-                        {cartItems.map(item => (
+                            {cartItems.map(item => (
 
-                            <tr key={item.id}>
+                                <tr key={item.id}>
 
-                                <td>{item.name}</td>
+                                    <td>{item.name}</td>
 
-                                <td>₹{item.price}</td>
+                                    <td>₹{item.price}</td>
 
-                                <td>
-                                    {item.quantity}
-                                </td>
+                                    <td>{item.quantity}</td>
 
-                                <td>
+                                    <td>
 
-                                    <button
-                                        className="btn btn-success me-2"
-                                        onClick={() =>
-                                            increaseQuantity(item.id)
-                                        }
-                                    >
-                                        +
-                                    </button>
+                                        <button
+                                            className="btn btn-success me-2"
+                                            onClick={() =>
+                                                increaseQuantity(item.id)
+                                            }
+                                        >
+                                            +
+                                        </button>
 
-                                    <button
-                                        className="btn btn-warning me-2"
-                                        onClick={() =>
-                                            decreaseQuantity(item.id)
-                                        }
-                                    >
-                                        -
-                                    </button>
+                                        <button
+                                            className="btn btn-warning me-2"
+                                            onClick={() =>
+                                                decreaseQuantity(item.id)
+                                            }
+                                        >
+                                            -
+                                        </button>
 
-                                    <button
-                                        className="btn btn-danger"
-                                        onClick={() =>
-                                            removeItem(item.id)
-                                        }
-                                    >
-                                        Remove
-                                    </button>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={() =>
+                                                removeItem(item.id)
+                                            }
+                                        >
+                                            Remove
+                                        </button>
 
-                                </td>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                        ))}
+                            ))}
 
                         </tbody>
 
@@ -161,21 +154,15 @@ function Cart({ cartItems, setCartItems }) {
                         Total: ₹{total}
                     </h3>
 
-<button
-    className="btn btn-success mt-3"
-    onClick={() =>
-       navigate("/checkout", {
-    state: {
-        totalAmount: total,
-        cartItems: cartItems
-    }
-})
-    }
->
-    Proceed To Checkout
-</button>
+                    <button
+                        className="btn btn-success mt-3"
+                        onClick={handleCheckout}
+                    >
+                        Proceed To Checkout
+                    </button>
 
                 </>
+
             )}
 
         </div>
